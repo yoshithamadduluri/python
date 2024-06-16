@@ -1,0 +1,36 @@
+import time
+import math
+# Recurrence relation: T(n) = 2T(n/2) + n
+def master_theorem(a, b, f, n):
+    if a > 0 and b > 1:
+        # Case 1: f(n) = O(n^c), where c < log_b(a)
+        if f(n) == n and 1 < math.log(a, b):
+            return f"Master Theorem Result: O(n^{math.log(a, b)})"
+        # Case 2: f(n) = Theta(n^c * log^k(n)), where c = log_b(a)
+        if f(n) == n and 1 == math.log(a, b):
+            return f"Master Theorem Result: Theta(n^{math.log(a, b)} * log^{math.log(a, b)}(n))"
+        # Case 3: f(n) = Omega(n^c), where c > log_b(a)
+        if f(n) == n and 1 > math.log(a, b):
+            return f"Master Theorem Result: Omega(n)"
+    return "Cannot determine"
+# Substitution Method
+def substitution_method(n):
+    if n == 1:
+        return 1  # Base case
+    return 2 * substitution_method(n // 2) + n
+# Iteration Method
+def iteration_method(n):
+    result = 0
+    while n > 0:
+        result += n
+        n //= 2
+    return result
+def f(n):
+    return n
+n = 1000  # Example value of n
+# Using Master Theorem
+def log_b(a):
+    return math.log(a, 2)
+print(master_theorem(2, 2, f, n))
+print("Substitution Method Result:", substitution_method(n))
+print("Iteration Method Result:", iteration_method(n))
